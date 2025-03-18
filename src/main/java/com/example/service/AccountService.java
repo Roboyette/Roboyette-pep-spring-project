@@ -14,10 +14,8 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public Account register(Account account) {
-        if (account.getUsername() == null || account.getUsername().isBlank() ||
-            account.getPassword() == null || account.getPassword().length() < 4 ||
-            accountRepository.findByUsername(account.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Invalid account details");
+        if (accountRepository.findByUsername(account.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
         }
         return accountRepository.save(account);
     }
